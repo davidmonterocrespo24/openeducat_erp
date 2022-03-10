@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<template id = "hfoc_stock_quant_package_pdf">
+		<t t-call="web.html_container">
+				
+    					<t t-foreach="docs" t-as="doc">  
+
+			  <t t-set="products" t-value="doc.quant_ids"/>
+    			  <t t-foreach="products" t-as="line">
+					<div style="page-break-after:always"/>
+    				<div class="page">	 
+    				  <div style="height:4px">
+    					</div>
+    					<div style="height:507px;margin-left:-3px;margin-right:-3px;border: 2px solid black"><br/>
+    						<div style="height:150px;text-align:center"><br/>
+    							<span style="font-size:12px">Lot</span><br/>
+    							<span style="font-size:63px;font-weight:600"><span t-field="line.lot_id.name"/></span>
+    						</div>					  
+    						<!-- table -->
+    						
+    						
+    						<table style="float:right;position:absolute">
+    							<tr style="height:55px">
+    								<td valign="top" style="padding-left:12px;width:280px;max-width:280px">
+									    <div>
+        						  	<div style="font-size:12px">Product</div>
+    										<div style="line-height:20px;font-size:21px;font-weight:600"><span t-field="line.product_id.name"/>
+    										</div>
+        						</div>
+    						
+    								</td>
+    								<td valign="top" style="padding-left:5px">
+										<div style="font-size:12px">Tag</div>
+										<div style="font-size:21px;font-weight:600"><span t-field="line.lot_id.hfoc_tag"/></div>
+    								</td>
+    							</tr>
+    							<tr style="height:55px">
+									<td valign="top" style="padding-left:12px;font-size:12px">
+										<div style="font-size:12px">Label</div>
+										<div style="font-size:21px;font-weight:600"><span t-esc="line.lot_id.hfoc_owner_id.hfoc_label or line.lot_id.hfoc_owner_id.name"/></div>
+    								</td>							
+    														
+    								<td valign="top" style="padding-left:5px">
+										<div style="font-size:12px">Vendor Lot</div>
+										<div style="font-size:21px;font-weight:600"><span t-esc="line.lot_id.hfoc_partner_provelot.name"/></div>
+    								</td>							
+    							</tr>
+    							<tr style="height:55px">
+    								<td/>	
+    								<td valign="top" style="padding-left:12px">
+    								<div style="font-size:12px"/>
+    								<div style="font-size:21px;font-weight:600"/>
+    								</td>					
+    							</tr>
+    						</table>
+    						<div name="td_pk_barcode" style="padding-left:55px;position:absolute;margin-top:200px;text-align: center">
+    							<div t-field="doc.name" t-options="{'widget': 'barcode', 'width': 1000, 'height': 600, 'img_style': 'width:400px;height:80px;'}"/>
+    							<div style="font-size:18px;padding-top:5px;" t-field="doc.name"/>
+    						</div>
+    						<table style="padding-right:20px;margin-top:280px;position:absolute;">
+    							<tr>
+    								<td style="width:95%"/>
+    								<td style="font-size:12px">Qty</td>
+    								
+    							</tr>
+    							<tr>
+    								<td/>
+    								<td style="padding-right:5px;font-size:27px;font-weight:600">
+    								  <span t-esc="int(line.quantity)"/>
+    						
+    								</td>
+    							</tr>
+    						</table>						
+    					</div>
+    					<!-- table -->
+    					
+    					
+    					<table style="float:right;position:absolute;height:80px;margin-left:-6px;padding-top:1px;border:0.5px solid black">
+    					    <tr>                
+    						<td style="padding-right:12px;padding-left:12px;border:1px solid white; height:124px;padding-top:10px;">
+    							<div style="text-align: center" t-field="doc.name" t-options="{'widget': 'barcode', 'width': 1000, 'height': 600, 'img_style': 'width:230px;height:30px;'}"/>
+    							<div style="padding-top:2px;text-align: center;font-size:10px" t-field="doc.name"/>
+    							<div style="width:225px;float:right;position:absolute;padding-left:3px;font-size:10px;font-weight:600;line-height:10px;">
+    							  <span t-field="line.product_id.name"/></div>
+    							<table style="width:100%;padding-top:10px">
+    								<tr style="line-height:8px;">
+    								<td style="font-size:10px;font-weight:600">
+    								  <span t-field="line.lot_id.hfoc_tag"/></td>
+    								</tr>
+    							</table>
+    							<table style="width:100%;">
+    								<tr>
+    								<td style="font-size:10px;font-weight:600;vertical-align:top"><span t-esc="line.lot_id.hfoc_owner_id.hfoc_label"/></td>
+    								<td style="font-size:20px;font-weight:600;vertical-align:middle;text-align:center"><span t-field="line.lot_id.name"/></td>
+    								<td style="font-size:16px;font-weight:600;vertical-align:bottom;text-align:right">
+    								   <span t-esc="int(line.quantity)"/>
+    								  </td>
+    								</tr>
+    							</table>
+                    		</td>                
+    						<td style="padding-right:12px;padding-left:12px;border:1px solid white;height:124px;padding-top:10px;">
+    							<div style="text-align: center" t-field="doc.name" t-options="{'widget': 'barcode', 'width': 1000, 'height':600, 'img_style': 'width:230px;height:30px;'}"/>
+    							<div style="padding-top:2px;text-align: center;font-size:10px" t-field="doc.name"/>
+    							<div style="width:225px;float:right;position:absolute;padding-left:3px;font-size:10px;font-weight:600;line-height:10px;">
+    							  <span t-field="line.product_id.name"/></div>
+    							<table style="width:100%;padding-top:10px">
+    								<tr style="line-height:8px;">
+    								<td style="font-size:10px;font-weight:600">
+    								  <span t-field="line.lot_id.hfoc_tag"/></td>
+    								</tr>
+    							</table>
+    							<table style="width:100%;">
+    								<tr>
+    								<td style="font-size:10px;font-weight:600;vertical-align:top"><span t-esc="line.lot_id.hfoc_owner_id.hfoc_label"/></td>
+    								<td style="font-size:20px;font-weight:600;vertical-align:middle;text-align:center"><span t-field="line.lot_id.name"/></td>
+    								<td style="font-size:16px;font-weight:600;vertical-align:bottom;text-align:right">
+    								   <span t-esc="int(line.quantity)"/>
+    								</td>
+    								</tr>
+    							</table>
+    						</td>                
+    						</tr>					
+    						<tr>                
+    						<td style="padding-right:12px;padding-left:12px;border:1px solid white;height:124px;padding-top:17px">
+    							<div style="text-align: center" t-field="doc.name" t-options="{'widget': 'barcode', 'width': 1000, 'height': 600, 'img_style': 'width:230px;height:30px;'}"/>
+    							<div style="padding-top:2px;text-align: center;font-size:10px" t-field="doc.name"/>
+    							<div style="width:225px;float:right;position:absolute;padding-left:3px;font-size:10px;font-weight:600;line-height:10px;">
+    							  <span t-field="line.product_id.name"/></div>
+    							<table style="width:100%;padding-top:10px">
+    								<tr style="line-height:8px;">
+    								<td style="font-size:10px;font-weight:600">
+    								  <span t-field="line.lot_id.hfoc_tag"/></td>
+    								</tr>
+    							</table>
+    							<table style="width:100%;">
+    								<tr>
+    								<td style="font-size:10px;font-weight:600;vertical-align:top"><span t-esc="line.lot_id.hfoc_owner_id.hfoc_label"/></td>
+    								<td style="font-size:20px;font-weight:600;vertical-align:middle;text-align:center"><span t-field="line.lot_id.name"/></td>
+    								<td style="font-size:16px;font-weight:600;vertical-align:bottom;text-align:right">
+    								   <span t-esc="int(line.quantity)"/>
+    								  </td>
+    								</tr>
+    							</table>
+    						</td>                
+    						<td style="padding-right:12px;padding-left:12px;border:1px solid white;height:124px;padding-top:17px">
+    							<div style="text-align: center" t-field="doc.name" t-options="{'widget': 'barcode', 'width': 1000, 'height': 600, 'img_style': 'width:230px;height:30px;'}"/>
+    							<div style="padding-top:2px;text-align: center;font-size:10px" t-field="doc.name"/>
+    							<div style="width:225px;float:right;position:absolute;padding-left:3px;font-size:10px;font-weight:600;line-height:10px;">
+    							  <span t-field="line.product_id.name"/></div>
+    							<table style="width:100%;padding-top:10px">
+    								<tr style="line-height:8px;">
+    								<td style="font-size:10px;font-weight:600">
+    								  <span t-field="line.lot_id.hfoc_tag"/></td>
+    								</tr>
+    							</table>
+    							<table style="width:100%;">
+    								<tr>
+    								<td style="font-size:10px;font-weight:600;vertical-align:top"><span t-esc="line.lot_id.hfoc_owner_id.hfoc_label"/></td>
+    								<td style="font-size:20px;font-weight:600;vertical-align:middle;text-align:center"><span t-field="line.lot_id.name"/></td>
+    								<td style="font-size:16px;font-weight:600;vertical-align:bottom;text-align:right">
+    								   <span t-esc="int(line.quantity)"/>
+    								  </td>
+    								</tr>
+    							</table>
+    						</td>                
+                  			</tr>             
+                		</table>
+    				</div>
+    				
+    				</t>
+    				
+    				
+			</t>
+			
+		</t>
+	</template>
+
+</odoo>

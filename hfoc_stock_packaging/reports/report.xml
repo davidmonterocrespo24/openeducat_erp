@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="hfoc_stock_picking_product_pdf_report" model="ir.actions.report">
+            <field name="name">Codigo de barras Producto</field>
+            <field name="model">stock.picking</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">hfoc_stock_packaging.hfoc_stock_picking_product_pdf</field>
+            <field name="report_file">hfoc_stock_packaging.hfoc_stock_picking_product_pdf</field>
+            <field name="binding_model_id" ref="model_stock_picking"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <record id="menu_hfoc_stock_quant_package_pdf" model="ir.actions.report">
+            <field name="name">Codigo de barras Pallet</field>
+            <field name="model">stock.quant.package</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">hfoc_stock_packaging.hfoc_stock_quant_package_pdf</field>
+            <field name="report_file">hfoc_stock_packaging.hfoc_stock_quant_package_pdf</field>
+        </record>
+
+        <record id="report_hfoc_shipping_label_pdf" model="ir.actions.report">
+            <field name="name">Shipping label / SScc - Pallet</field>
+            <field name="model">stock.picking</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">hfoc_stock_packaging.hfoc_stock_street_package_pdf</field>
+            <field name="report_file">hfoc_stock_packaging.hfoc_stock_street_package_pdf</field>
+            <field name="binding_model_id" ref="model_stock_picking"/>
+            <field name="binding_type">report</field>
+        </record>
+
+
+    </data>
+</odoo>

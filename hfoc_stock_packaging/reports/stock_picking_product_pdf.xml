@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<template id = "hfoc_stock_picking_product_pdf">
+		<t t-call="web.html_container">
+				
+            	<t t-foreach="docs" t-as="doc">	
+				
+				<!-- <t t-if="doc.move_ids_without_package"> -->
+					<t t-if="doc.picking_type_code == 'incoming'">
+				  
+				  <t t-set="lines" t-value="doc.move_ids_without_package"/>
+			  	<t t-foreach="lines" t-as="line">			      
+			      
+					<t t-set="line_product" t-value="line.move_line_nosuggest_ids"/>
+					<t t-foreach="line_product" t-as="product">	
+				
+							<div style="page-break-after:always"/>
+							<div class="page">	
+												
+								<div style="height:10px;">
+								</div>          					
+								
+								<div style="height:65px;text-align: center;color:black;">
+									<div t-if="product.lot_id.hfoc_gtin_full" t-esc="str(product.lot_id.hfoc_gtin_full)" t-options="{'widget': 'barcode', 'width': 1800, 'height': 50, 'img_style': 'width:430px;height:50px;'}"/>
+									<div t-if="product.lot_id.hfoc_gtin_full_str" t-esc="str(product.lot_id.hfoc_gtin_full_str)" style="font-size:12px;padding-top:3px;"/>
+								</div>
+								
+								<strong><span style="padding-top:3px;line-height:15px;padding-left:3px;float: right;position:absolute;width:310px" t-field="line.product_id.name"/></strong>
+											
+								<table style="border:1px solid white;max-height:122px;height:122px">
+									<tr>
+										<td style="width:190px;" valign="top">
+  										   <div style="padding-top:45px;float:right;position:absolute;width:160px;font-size:14px">
+  										      	<strong><span t-field="line.product_id.hfoc_nationality"/></strong><br/>
+          										<span t-field="line.product_id.hfoc_business"/><br/>
+          										<span t-field="line.product_id.hfoc_street"/>
+  										  </div>
+  									</td>
+										<td>
+											<div style="text-align: center;color:black">
+											<br/><br/>
+											<div t-field="line.product_id.barcode" t-options="{'widget': 'barcode', 'width': 800, 'height': 100, 'img_style': 'width:180px;height:60px;margin-left:-30px;margin-right:-35px;'}"/>
+											<div t-field="line.product_id.barcode" style="font-size:12px;padding-top:3px;"/>
+										</div>
+										</td>
+										<td valign="top" style="width:175px;text-align: center;color:black;font-size:15px;padding-top:20px;">
+										  <div style="height:65px">
+											<div>Harvest Date</div>
+											<div style="padding-top:10px;text-align: center;position: relative">
+											<span style="border:1px solid black; padding:8px;text-transform: capitalize;" t-field="product.lot_id.hfoc_harvest_date" t-options="{&quot;format&quot;: &quot;MMMM d&quot;}"/></div>
+											</div>
+										</td>
+									</tr>
+								</table>
+									
+							  	<div style="position: relative;">
+									<div style="position: absolute;bottom: -8px;right: -9px;background: black;color: white;padding: 8px 6px 3px 6px;">
+										<div><span style="font-size:13px;font-weight:600;"><span t-if="product.lot_id.hfoc_vpc" t-esc="product.lot_id.hfoc_vpc[0:2]"/> </span><span> </span><span style="font-size:20px;font-weight:600;"> <span t-if="product.lot_id.hfoc_vpc" t-esc="product.lot_id.hfoc_vpc[2:4]"/> </span></div>
+									</div>
+								</div>
+						
+							</div>
+          			
+          	    </t>      			
+      			</t>
+      	 </t>		
+      			
+				
+				
+				
+			<!--	<t t-if="not doc.move_ids_without_package"> -->
+				  
+				  	<t t-if="doc.picking_type_code == 'outgoing'">
+				  
+				  
+				  <t t-set="lines" t-value="doc.move_line_ids_without_package"/>
+			  	<t t-foreach="lines" t-as="line">			      
+			     
+					  	
+					
+							<div style="page-break-after:always"/>
+							<div class="page">	
+												
+								<div style="height:10px;">
+								</div>          					
+								
+								<div style="height:65px;text-align: center;color:black;">
+									<div t-if="line.lot_id.hfoc_gtin_full" t-esc="str(line.lot_id.hfoc_gtin_full)" t-options="{'widget': 'barcode', 'width': 1800, 'height': 50, 'img_style': 'width:430px;height:50px;'}"/>
+									<div t-if="line.lot_id.hfoc_gtin_full_str" t-esc="str(line.lot_id.hfoc_gtin_full_str)" style="font-size:12px;padding-top:3px;"/>
+								</div>
+								
+								<strong><span style="padding-top:3px;line-height:15px;padding-left:3px;float: right;position:absolute;width:310px" t-field="line.product_id.name"/></strong>
+											
+								<table style="border:1px solid white;max-height:122px;height:122px">
+									<tr>
+										<td style="width:190px;" valign="top">
+  										   <div style="padding-top:45px;float:right;position:absolute;width:160px;font-size:14px">
+  										      	<strong><span t-field="line.product_id.hfoc_nationality"/></strong><br/>
+          										<span t-field="line.product_id.hfoc_business"/><br/>
+          										<span t-field="line.product_id.hfoc_street"/>
+  										  </div>
+  									</td>
+										<td>
+											<div style="text-align: center;color:black">
+											<br/><br/>
+											<div t-field="line.product_id.barcode" t-options="{'widget': 'barcode', 'width': 800, 'height': 100, 'img_style': 'width:180px;height:60px;margin-left:-30px;margin-right:-35px;'}"/>
+											<div t-field="line.product_id.barcode" style="font-size:12px;padding-top:3px;"/>
+										</div>
+										</td>
+										<td valign="top" style="width:175px;text-align: center;color:black;font-size:15px;padding-top:20px;">
+										  <div style="height:65px">
+											<div>Harvest Date</div>
+											<div style="padding-top:10px;text-align: center;position: relative">
+											<span style="border:1px solid black; padding:8px;text-transform: capitalize;" t-field="line.lot_id.hfoc_harvest_date" t-options="{&quot;format&quot;: &quot;MMMM d&quot;}"/></div>
+											</div>
+										</td>
+									</tr>
+								</table>
+									
+							  	<div style="position: relative;">
+									<div style="position: absolute;bottom: -8px;right: -9px;background: black;color: white;padding: 8px 6px 3px 6px;">
+										<div><span style="font-size:13px;font-weight:600;"><span t-if="line.lot_id.hfoc_vpc" t-esc="line.lot_id.hfoc_vpc[0:2]"/> </span><span> </span><span style="font-size:20px;font-weight:600;"> <span t-if="line.lot_id.hfoc_vpc" t-esc="line.lot_id.hfoc_vpc[2:4]"/> </span></div>
+									</div>
+								</div>
+						
+							</div>
+          			
+          	    </t>      			
+      			</t>
+      	 </t>		
+      			
+				
+				
+				
+				<t t-if="not doc.move_ids_without_package">
+				  
+				  
+				  <t t-set="lines" t-value="doc.move_line_ids_without_package"/>
+			  	<t t-foreach="lines" t-as="line">			      
+			     
+					  	
+					
+							<div style="page-break-after:always"/>
+							<div class="page">	
+												
+								<div style="height:10px;">
+								</div>          					
+								
+								<div style="height:65px;text-align: center;color:black;">
+									<div t-if="line.hfoc_gtin_full" t-esc="str(line.hfoc_gtin_full)" t-options="{'widget': 'barcode', 'width': 1800, 'height': 50, 'img_style': 'width:430px;height:50px;'}"/>
+									<div t-if="line.hfoc_gtin_full_str" t-esc="str(line.hfoc_gtin_full_str)" style="font-size:12px;padding-top:3px;"/>
+								</div>
+								
+								<strong><span style="padding-top:3px;line-height:15px;padding-left:3px;float: right;position:absolute;width:310px" t-field="line.product_id.name"/></strong>
+											
+								<table style="border:1px solid white;max-height:122px;height:122px">
+									<tr>
+										<td style="width:190px;" valign="top">
+  										   <div style="padding-top:45px;float:right;position:absolute;width:160px;font-size:14px">
+  										      	<strong><span t-field="line.product_id.hfoc_nationality"/></strong><br/>
+          										<span t-field="line.product_id.hfoc_business"/><br/>
+          										<span t-field="line.product_id.hfoc_street"/>
+  										  </div>
+  									</td>
+										<td>
+											<div style="text-align: center;color:black">
+											<br/><br/>
+											<div t-field="line.product_id.barcode" t-options="{'widget': 'barcode', 'width': 800, 'height': 100, 'img_style': 'width:180px;height:60px;margin-left:-30px;margin-right:-35px;'}"/>
+											<div t-field="line.product_id.barcode" style="font-size:12px;padding-top:3px;"/>
+										</div>
+										</td>
+										<td valign="top" style="width:175px;text-align: center;color:black;font-size:15px;padding-top:20px;">
+										  <div style="height:65px">
+											<div>Harvest Date</div>
+											<div style="padding-top:10px;text-align: center;position: relative">
+											<span style="border:1px solid black; padding:8px;text-transform: capitalize;" t-field="line.lot_id.hfoc_harvest_date" t-options="{&quot;format&quot;: &quot;MMMM d&quot;}"/></div>
+											</div>
+										</td>
+									</tr>
+								</table>
+									
+							  	<div style="position: relative;">
+									<div style="position: absolute;bottom: -8px;right: -9px;background: black;color: white;padding: 8px 6px 3px 6px;">
+										<div><span style="font-size:13px;font-weight:600;"><span t-if="line.lot_id.hfoc_vpc" t-esc="line.lot_id.hfoc_vpc[0:2]"/> </span><span> </span><span style="font-size:20px;font-weight:600;"> <span t-if="line.lot_id.hfoc_vpc" t-esc="line.lot_id.hfoc_vpc[2:4]"/> </span></div>
+									</div>
+								</div>
+						
+							</div>
+          			
+          	    </t>      			
+      			</t>
+      			
+      			
+      			
+      		</t>
+  			
+  			
+  	
+  		
+	
+	</template>
+
+</odoo>

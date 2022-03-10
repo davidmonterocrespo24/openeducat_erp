@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_hfoc_stock_report_form" model="ir.ui.view">
+            <field name="name">hfoc.stock.report.form</field>
+            <field name="model">hfoc.stock.report</field>
+            <field name="arch" type="xml">
+                <form string="Search Product">
+                      <style>
+                          .o_form_view .o_form_sheet_bg > .o_form_sheet {
+                            width: 98% !important;
+                            max-width: 98% !important;
+
+                        }
+                        </style>
+                    <sheet>                               
+                        <field name="name" invisible="1"/>                    
+                        <group>
+                            <group>
+                                <field name="search" style="height: 31px;" nolabel="1" placeholder="Search Product"/> 
+                                <button name="search_product_report" type="object" string="Filter" class="btn btn-primary"/>
+                    
+                            </group>
+                            <group>
+                              <field name="company_id" domain="[('id','=', allowed_company_ids[0] )]"  options="{'no_create': True, 'no_open': True}" /> 
+                            
+                            </group>
+                        </group>
+                        
+                       
+                        <field name="product_ids" readonly="1" >
+                            <tree limit="80" >                                
+                                <field name="display_name" string="Producto" />                                
+                                <field name="virtual_available" string="Disponible" />
+                                <field name="qty_available" string="Fisico" />
+                                
+                                <field name="tracking" invisible="1" />
+
+                                <field name="hfoc_lot_html" readonly="1" />
+                                <button string="" type="object" name="action_hfoc_open_product_lot" attrs="{'invisible': [('hfoc_lot_html', '=', '')]}" class="oe_stat_button" icon="fa-bars" groups="stock.group_production_lot"/>
+                                <field name="hfoc_total_in_receipt" readonly="1" />
+                                <field name="hfoc_total_sales" string="Vendido" readonly="1" /> 
+                                
+                                <field name="hfoc_ref_sales_list" invisible="1" />
+                                <field name="hfoc_ref_sales" readonly="1" />
+                                
+                                <button string=""  type="object" name="action_hfoc_open_sales" attrs="{'invisible': [('hfoc_ref_sales', '=', '' )]}" class="oe_stat_button" icon="fa-bars" groups="stock.group_production_lot"/>
+                                
+
+                            </tree>                         
+                        </field>
+
+
+                    </sheet>
+                </form>
+            
+            </field>
+        </record>
+
+        
+        <record id="action_hfoc_stock_report" model="ir.actions.act_window">
+            <field name="name">Consultar producto</field>
+            <field name="res_model">hfoc.stock.report</field>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+            <field name="context">{}</field>
+            <field name="search_view_id" ref="view_hfoc_stock_report_form"/>
+        </record>
+
+
+        <menuitem 
+        id="menu_hfoc_stock_report_view"
+        name="Overview"
+        action="action_hfoc_stock_report" 
+        sequence="4"
+        parent="sale.sale_menu_root" />
+
+
+    </data>
+        
+    
+    
+</odoo>

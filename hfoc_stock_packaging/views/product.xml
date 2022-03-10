@@ -1,0 +1,177 @@
+<odoo>
+    <data>
+
+        <record id="hfoc_move_line_nosuggest_ids_page" model="ir.ui.view">
+            <field name="name">move_line_nosuggest_ids_page</field>
+            <field name="model">stock.move</field>
+            <field name="inherit_id" ref="stock.view_stock_move_nosuggest_operations"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='move_line_nosuggest_ids']" position="replace">                   
+                        <notebook>
+                            <page string="Move lines" >
+                                <field name="move_line_nosuggest_ids" attrs="{'readonly': ['|', ('state', '=', 'cancel'), '&amp;', ('state', '=', 'done'), ('is_locked', '=', True)]}" context="{'tree_view_ref': 'stock.view_stock_move_line_operation_tree','default_picking_id': picking_id, 'default_move_id': id, 'default_product_id': product_id, 'default_location_id': location_id, 'default_location_dest_id': location_dest_id, 'default_company_id': company_id}"/>
+                            </page>
+                            <page string="Detail lines" >
+                                <field name="hfoc_move_detail" context="{'default_hfoc_stock_move2': id }" attrs="{'readonly': ['|', ('state', '=', 'cancel'), '&amp;', ('state', '=', 'done'), ('is_locked', '=', True)]}" >                                
+                                    <tree string="Detail lines" editable="bottom" >
+                                        <field name="hfoc_owner_id" />     
+                                        <field name="hfoc_partner_provelot" domain="[('hfoc_partner_id_parent','=', hfoc_owner_id )]" options="{'no_create': True, 'no_open': True}" required="1" />
+                                        <field name="hfoc_num_lot" sum="Qty Total" />
+                                        <field name="hfoc_harvest_date" required="1" />
+                                        <field name="hfoc_tag" />                                                                                
+                                        <field name="hfoc_stock_move" invisible="1" />  
+                                        <field name="hfoc_stock_move2" invisible="1" />   
+                                    </tree>
+                                 </field>
+                            </page>
+                        </notebook>                            
+                </xpath>                 
+            </field>
+        </record> 
+
+        <record id="hfoc_vendor_code" model="ir.ui.view">
+            <field name="name">hfoc_vendor_code</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <field name="title" position="before">
+                    <field name="hfoc_label" />
+                </field>               
+
+                <xpath expr="//page[@name='internal_notes']" position="after">
+                    <page name="hfoc_prove_cod" string="Vendor Code lots">
+                        <field name="hfoc_partner_provelot"  >                                
+                            <tree string="Detail lines" editable="bottom" >
+                                <field name="name" required="1" />                                        
+                                <field name="hfoc_number_lot" />
+                                <field name="ref_prove"  />
+                                <field name="hfoc_partner_id" invisible="1" />
+                                <field name="hfoc_partner_id_parent" invisible="1" />
+                            </tree>
+                        </field>                     
+                    </page>
+                </xpath>
+
+            </field>
+        </record> 
+
+
+        <record id="hfoc_packaging_product" model="ir.ui.view">
+            <field name="name">hfoc_packaging_product</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_form_view"/>
+            <field name="arch" type="xml">
+                <group name="inventory" position="after">
+                     <group string="Packaging"  colspan="2" name="packaging">
+                        <group>
+                            <field name="hfoc_gtin" invisible="0" string="GTIN"/>
+                            <field name="hfoc_pcs" invisible="1"  string="PCS" placeholder="20 PCS" />
+                            <field name="hfoc_nationality" string="Nationality"/>
+                            <field name="hfoc_business" string="Business"/>
+                            <field name="hfoc_street" string="Street"/>
+                        </group>
+                    </group>
+
+                </group>
+            </field>
+        </record>  
+
+        <record id="hfoc_stock_move_line" model="ir.ui.view">
+            <field name="name">hfoc_stock_move_line</field>
+            <field name="model">stock.move.line</field>
+            <field name="inherit_id" ref="stock.view_stock_move_line_operation_tree"/>
+            <field name="arch" type="xml">
+                <field name="qty_done" position="before">
+                    <field name="reference" invisible="1" />
+                    <field name="hfoc_harvest_date" attrs="{'invisible': [('reference', 'ilike', 'out')]}" />
+                    <field name="hfoc_tag"  attrs="{'invisible': [('reference', 'ilike', 'out')]}" />                    
+                    <field name="hfoc_partner_provelot" invisible="1"/>                    
+                </field>
+            </field>
+        </record>    
+
+         <record id="hfoc_stock_move_line_detailed" model="ir.ui.view">
+            <field name="name">hfoc_stock_move_line_detailed</field>
+            <field name="model">stock.move.line</field>
+            <field name="inherit_id" ref="stock.view_stock_move_line_detailed_operation_tree"/>
+            <field name="arch" type="xml">
+                <field name="qty_done" position="before">
+                    <field name="hfoc_harvest_date" />
+                    <field name="hfoc_tag" invisible="1" />
+                    <field name="hfoc_partner_provelot"  invisible="1"  /> 
+                </field>
+            </field>
+        </record>    
+
+
+
+        <record id="view_hfoc_info_lot" model="ir.ui.view">
+            <field name="name">hfoc_info_lot</field>
+            <field name="model">stock.production.lot</field>
+            <field name="inherit_id" ref="stock.view_production_lot_form"/>
+            <field name="arch" type="xml">
+                <field name="ref" position="before">
+                    <field name="hfoc_harvest_date" groups="stock.group_stock_user" />
+                    <field name="hfoc_tag" groups="stock.group_stock_user" />
+                    <field name="hfoc_owner_id"  groups="stock.group_stock_user" />
+                    <field name="hfoc_partner_provelot"  domain="[('hfoc_partner_id_parent','=', hfoc_owner_id )]"  groups="stock.group_stock_user" />   
+                    <field name="hfoc_gtin_full" invisible="1" force_save="1" /> 
+                    <field name="hfoc_gtin_full_str" invisible="1" force_save="1" /> 
+                    
+                    <field name="hfoc_gtin_product" invisible="0"  force_save="1" /> 
+                    
+                    <field name="hfoc_vpc"  invisible="1"  />  
+                    <field name="hfoc_lot_ref"    />
+                </field>
+            </field>
+        </record> 
+
+
+
+        <record id="view_hfoc_attrs_mod" model="ir.ui.view">
+            <field name="name">view_hfoc_attrs_mod</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//button[@name='action_put_in_pack']" position="replace">
+                    <button name="buttom_create_package_id" type="object" string="Put in Pack" class="btn btn-dark" attrs="{'invisible': ['|',('picking_type_code', '!=', 'incoming'),('state', '!=', 'assigned')]}" groups="stock.group_tracking_lot"/>
+                </xpath>
+                
+                <xpath expr="//button[@name='action_put_in_pack'][1]" position="replace">
+                    <button name="buttom_create_package_id" type="object" string="Put in Pack" class="btn btn-dark" attrs="{'invisible': ['|',('picking_type_code', '!=', 'incoming'),('state', '!=', 'assigned')]}" groups="stock.group_tracking_lot"/>
+                </xpath>
+
+                <xpath expr="//page/field/tree/field[@name='company_id']" position="after">
+                    <field name="hfoc_code_ccss" string="SSCC"  attrs="{'invisible': [('hfoc_code_ccss', '=', False )]}" groups="stock.group_tracking_lot" />
+                </xpath>
+
+
+                <xpath expr="//button[@name='action_open_label_layout']" position="before">
+                    <field name="hide_ccss_bottom" invisible="1"  />
+                    <button name="buttom_hfoc_number_ccss" type="object" string="Get SSCC" class="btn btn-success" attrs="{'invisible': ['|','|',('hide_ccss_bottom','=', True),('picking_type_code', '!=', 'outgoing'),('state', 'in', ('draft','cancel'))]}" groups="stock.group_tracking_lot"/>
+                </xpath>
+
+                
+              
+                <xpath expr="//field[@name='location_dest_id']" position="after">                  
+                    <label for="hfoc_harvest_date" attrs="{'invisible': [('picking_type_code', '!=', 'incoming')],'readonly': [('state', '=', 'done')]}" />
+                    <div class="o_row" attrs="{'invisible': [('picking_type_code', '!=', 'incoming')]}" >
+                        <span><field name="hfoc_harvest_date" attrs="{'invisible': [('picking_type_code', '!=', 'incoming')],'readonly': [('state', '=', 'done')]}" /></span>
+                        <span><field name="hfoc_tag" placeholder="TAG example: T25" attrs="{'readonly': [('state', '=', 'done')]}"/>   </span>
+                    </div>     
+
+                    <field name="hfoc_partner_provelot" domain="[('hfoc_partner_id_parent','=', owner_id )]" options="{'no_create': True, 'no_open': True}" attrs="{'invisible': [('picking_type_code', '!=', 'incoming')],'readonly': [('state', '=', 'done')]}" />
+                   
+                          
+                </xpath>
+
+
+            </field>
+        </record>
+
+
+
+    </data>
+
+</odoo>

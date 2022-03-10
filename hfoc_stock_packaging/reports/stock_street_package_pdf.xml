@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<template id = "hfoc_stock_street_package_pdf">
+		<t t-call="web.html_container">
+			<t t-foreach="docs" t-as="doc">
+            
+
+            <t t-set="lines" t-value="doc.move_ids_without_package"/>
+			  <t t-foreach="lines" t-as="line">
+              
+                <div style="page-break-after:always"/>
+				<div class="page">				  
+                    <table>
+                        <tr>                       
+                            <td style="vertical-align:top;width:420px;padding:50px;font-size:30px;border-right:1px solid black;border-bottom:1px solid black">
+                                <span t-field="doc.company_id.name"/><br/>
+                                <span t-field="doc.company_id.street"/><br/>
+                                <span t-field="doc.company_id.city"/>, <span t-field="doc.company_id.state_id.code"/><br/>
+                                <span t-field="doc.company_id.zip"/></td>
+                            
+                            <td style="font-weight: 700;vertical-align:top;height:300px;width:880px;padding:50px;font-size:30px;border-bottom:1px solid black" colspan="2">
+                            
+                                <div style="float:left;width:8%">TO:</div>
+                                <div style="vertical-align:top;float:right;width:88%;padding-left:15px">
+                                    <span t-field="doc.partner_id.name"/><br/> 
+                                    <span t-field="doc.partner_id.street"/><br/>
+                                    <span t-field="doc.partner_id.city"/>, <span t-field="doc.partner_id.state_id.code"/><br/>
+                                    <span t-field="doc.partner_id.zip"/>
+                                </div>                           
+                            
+                            </td>
+                        </tr>
+                    </table>
+                    
+                     <table>
+                        <tr>
+                            <td style="text-align: center;height:400px;width:700px;padding:40px;font-size:35px;border-right:1px solid black;border-bottom:1px solid black" colspan="2"><strong>SHIP TO POSTAL CODE</strong><br/><br/>
+                                <t t-if="doc.partner_id.zip">
+                                  <div style="text-align: center" t-if="doc.partner_id.zip" t-esc="str('(420)'+doc.partner_id.zip)" t-options="{'widget': 'barcode', 'width': 1500, 'height': 100, 'img_style': 'width:600px;height:100px;'}"/>
+    							                <div style="padding-top:8px;text-align: center;font-size:30px;letter-spacing: 0.3em" t-esc="&quot;(420)&quot;+doc.partner_id.zip"/>
+                                </t>
+                            </td>
+                            <td style="height:300px;width:400px;padding:40px;font-size:35px;border-bottom:1px solid black"><strong><span t-if="doc.sale_id.client_order_ref" >PO: </span></strong><span t-field="doc.sale_id.client_order_ref"/> </td>
+                        </tr>                       
+                    </table>
+                    
+                     <table>
+                        <tr style="border-bottom:1px solid black">
+                            <td style="height:300px;width:700px;padding:40px;font-size:50px;border-bottom:1px solid black;border-right:1px solid black" colspan="2"> </td>                            
+                            <td style="height:300px;width:400px;padding:40px;font-size:50px;border-bottom:1px solid black"/>
+                        </tr>                      
+                    </table>
+                    
+                    <table>   
+                        <tr>
+                            <td style=";width:1200px;padding:50px;font-size:35px" colspan="3">
+                                <t t-if="line.hfoc_code_ccss">
+                                    <strong>SSCC:</strong><br/><br/>
+                                    <div style="text-align: center">                              
+                                        <div style="text-align: center" t-esc="'00'+str(line.hfoc_code_ccss)" t-options="{'widget': 'barcode', 'width': 2000, 'height': 400, 'img_style': 'width:1000px;height:400px;'}"/>
+                                        <div t-esc="'(00)'+str(line.hfoc_code_ccss)" style="padding-top:8px;text-align: center;font-size:30px"/>					              
+                                    </div>
+                                </t>
+                            </td>                            
+                        </tr>
+                    </table>
+                                        
+				</div>	
+
+
+          	
+          	</t>
+	        </t>
+
+		</t>
+	</template>
+  
+</odoo>
