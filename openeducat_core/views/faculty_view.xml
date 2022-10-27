@@ -61,6 +61,10 @@
                 <tree string="Faculty">
                     <field name="title"/>
                     <field name="name"/>
+                    <field name="gender" optional="hide"/>
+                    <field name="phone" optional="hide"/>
+                    <field name="mobile" optional="hide"/>
+                    <field name="email" optional="hide"/>
                     <field name="blood_group"/>
                     <field name="emergency_contact"/>
                     <field name="main_department_id" groups="openeducat_core.group_multi_department"/>
@@ -84,30 +88,35 @@
                         <field name="active" invisible="1"/>
                         <widget name="web_ribbon" title="Archived" bg_color="bg-danger"
                                 attrs="{'invisible': [('active', '=', True)]}"/>
-                        <div name="smart_button" class="oe_button_box">
 
+                        <div>
+                            <div>
+                                <field name="image_1920" widget="image" class="oe_left oe_avatar"/>
+                            </div>
+                            <div class="oe_title w-auto" style="padding-top:100px">
+                                <h3>
+                                    <field name="title" placeholder="Title" style="width:30%;"/>
+                                </h3>
+                                <h2>
+                                    <field name="name" placeholder="Name" required="1" invisible="1"/>
+                                    <table>
+                                        <tr>
+                                            <td style="padding-right:10px; max-width:120px;">
+                                                <field name="first_name" required="1" placeholder="First Name"/>
+                                            </td>
+                                            <td style="padding-right:10px; max-width:120px;">
+                                                <field name="middle_name" placeholder="Middle Name"/>
+                                            </td>
+                                            <td style="padding-right:10px; max-width:120px;">
+                                                <field name="last_name" placeholder="Last Name"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </h2>
+                            </div>
                         </div>
-                        <field name="image_1920" widget="image" class="oe_left oe_avatar"/>
-                        <div class="oe_title w-auto">
-                            <h3>
-                                <field name="title" placeholder="Title" style="width: 30%%"/>
-                            </h3>
-                            <h1>
-                                <field name="name" placeholder="Name" required="1" invisible="1"/>
-                                <table>
-                                    <tr>
-                                        <td style="padding-right:10px">
-                                            <field name="first_name" required="1" placeholder="First Name"/>
-                                        </td>
-                                        <td style="padding-right:10px">
-                                            <field name="middle_name" placeholder="Middle Name"/>
-                                        </td>
-                                        <td style="padding-right:10px">
-                                            <field name="last_name" placeholder="Last Name"/>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </h1>
+                        <div name="button_box" class="oe_button_box">
+
                         </div>
                         <group col="6" colspan="4">
                             <field name="gender"/>
